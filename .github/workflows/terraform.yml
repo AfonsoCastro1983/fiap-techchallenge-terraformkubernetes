@@ -28,10 +28,7 @@ jobs:
 
       # Importar recursos existentes no estado do Terraform
       - name: Import VPC
-        run: terraform import aws_vpc.lanchoneteFIAP lanchoneteFIAP-vpc || echo "VPC importado."
-
-      - name: Import RDS Subnet Group
-        run: terraform import aws_db_subnet_group.rds_subnet_group lanchonete-rds-subnet-group || echo "Subnet Group importado."
+        run: terraform import aws_vpc.lanchoneteFIAP vpc-0a9be4e1860b4a006 || echo "VPC importado."
 
       - name: Terraform Plan
         run: terraform plan
