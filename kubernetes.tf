@@ -16,7 +16,7 @@ resource "aws_vpc" "lanchoneteFIAP" {
 
 # Subnet A
 resource "aws_subnet" "subnetA" {
-  id = "subnet-058d5839f28fa3c6e
+  id = "subnet-058d5839f28fa3c6e"
   vpc_id = aws_vpc.lanchoneteFIAP.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-2a"
