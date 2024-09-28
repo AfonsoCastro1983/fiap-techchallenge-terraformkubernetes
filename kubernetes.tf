@@ -70,31 +70,3 @@ resource "aws_eks_node_group" "eks_node_group" {
   instance_types = ["t3.small"]
   ami_type       = "AL2_x86_64"
 }
-
-resource "null_resource" "eks_auth" {
-  provisioner "local-exec" {
-    command = <<EOT
-      kubectl apply -f - <<EOF
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: aws-auth
-        namespace: kube-system
-      data:
-        mapRoles: |
-          - rolearn: ${arn:aws:iam::992382363343:role/techChallenge-FIAP-EksClusterRole-hA8fsjaSWHrh}
-            username: system:node:{{EC2PrivateDNSName}}
-            groups:
-              - system:bootstrappers
-              - system:nodes
-        mapUsers: |
-          - userarn: arn:aws:iam::992382363343:user/Afonso
-            username: admin
-            groups:
-              - system:masters
-      EOF
-    EOT
-  }
-
-  depends_on = [aws_eks_cluster.eks]
-}
