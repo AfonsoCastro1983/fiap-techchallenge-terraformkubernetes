@@ -47,7 +47,7 @@ resource "aws_security_group" "eks_sg" {
 resource "aws_eks_cluster" "eks" {
   name = "lanchoneteFIAP"
   version = "1.27"
-  role_arn = aws_iam_role.eks_role.arn
+  role_arn = "arn:aws:iam::992382363343:role/Afonso"
 
   vpc_config {
     subnet_ids         = ["subnet-058d5839f28fa3c6e", "subnet-0cc7b890158d04759"]
@@ -55,22 +55,8 @@ resource "aws_eks_cluster" "eks" {
   }
 }
 
-# IAM Role for EKS
-resource "aws_iam_role" "eks_role" {
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = {
-        Service = "eks.amazonaws.com"
-      }
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
 resource "aws_iam_role_policy" "eks_cluster_policy" {
-  role = aws_iam_role.eks_role.id
+  role = "arn:aws:iam::992382363343:role/Afonso"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -88,39 +74,10 @@ resource "aws_iam_role_policy" "eks_cluster_policy" {
   })
 }
 
-# IAM Role for EKS Node Group
-resource "aws_iam_role" "eks_node_role" {
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      }
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "eks_worker_node" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-}
-
-resource "aws_iam_role_policy_attachment" "eks_cni" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-}
-
-resource "aws_iam_role_policy_attachment" "eks_ec2_container" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-}
-
 # EKS Node Group
 resource "aws_eks_node_group" "eks_node_group" {
   cluster_name = aws_eks_cluster.eks.name
-  node_role_arn = aws_iam_role.eks_node_role.arn
+  node_role_arn = "arn:aws:iam::992382363343:role/Afonso"
   subnet_ids = ["subnet-058d5839f28fa3c6e", "subnet-0cc7b890158d04759"]
 
   scaling_config {
