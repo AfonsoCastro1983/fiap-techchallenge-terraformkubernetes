@@ -82,7 +82,7 @@ resource "null_resource" "eks_auth" {
         namespace: kube-system
       data:
         mapRoles: |
-          - rolearn: ${aws_iam_role.eks_admin.arn}
+          - rolearn: ${arn:aws:iam::992382363343:role/techChallenge-FIAP-EksClusterRole-hA8fsjaSWHrh}
             username: system:node:{{EC2PrivateDNSName}}
             groups:
               - system:bootstrappers
