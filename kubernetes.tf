@@ -47,7 +47,7 @@ resource "aws_security_group" "eks_sg" {
 resource "aws_eks_cluster" "eks" {
   name = "lanchoneteFIAP"
   version = "1.27"
-  role_arn = "arn:aws:iam::992382363343:role/Afonso"
+  role_arn = "arn:aws:iam::992382363343:role/eks-admin"
 
   vpc_config {
     subnet_ids         = ["subnet-058d5839f28fa3c6e", "subnet-0cc7b890158d04759"]
@@ -58,7 +58,7 @@ resource "aws_eks_cluster" "eks" {
 # EKS Node Group
 resource "aws_eks_node_group" "eks_node_group" {
   cluster_name = aws_eks_cluster.eks.name
-  node_role_arn = "arn:aws:iam::992382363343:role/Afonso"
+  node_role_arn = "arn:aws:iam::992382363343:role/eks-admin"
   subnet_ids = ["subnet-058d5839f28fa3c6e", "subnet-0cc7b890158d04759"]
 
   scaling_config {
